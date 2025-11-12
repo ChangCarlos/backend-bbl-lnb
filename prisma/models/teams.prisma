@@ -1,0 +1,23 @@
+model Team {
+  id        String   @id @default(uuid())
+  teamKey   String   @unique @map("team_key") 
+  name      String   @map("team_name")
+  logo      String?  @map("team_logo")
+  
+  leagueKey String   @map("league_key")
+  league    League   @relation(fields: [leagueKey], references: [leagueKey], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  homeFixtures     Fixture[]     @relation("HomeTeam")
+  awayFixtures     Fixture[]     @relation("AwayTeam")
+  standings        Standing[]
+  players          Player[]
+  h2hFirstTeam     HeadToHead[]  @relation("FirstTeamH2H")
+  h2hSecondTeam    HeadToHead[]  @relation("SecondTeamH2H")
+  
+  @@map("teams")
+  @@index([teamKey])
+  @@index([leagueKey])
+}

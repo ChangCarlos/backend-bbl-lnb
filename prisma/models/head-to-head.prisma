@@ -1,0 +1,38 @@
+model HeadToHead {
+  id        String   @id @default(uuid())
+  
+  firstTeamKey  String   @map("first_team_key")
+  firstTeam     Team     @relation("FirstTeamH2H", fields: [firstTeamKey], references: [teamKey], onDelete: Cascade)
+  
+  secondTeamKey String   @map("second_team_key")
+  secondTeam    Team     @relation("SecondTeamH2H", fields: [secondTeamKey], references: [teamKey], onDelete: Cascade)
+  
+  eventKey          String   @map("event_key")
+  eventDate         String   @map("event_date")
+  eventTime         String   @map("event_time")
+  eventHomeTeam     String   @map("event_home_team")
+  homeTeamKey       String   @map("home_team_key")
+  eventAwayTeam     String   @map("event_away_team")
+  awayTeamKey       String   @map("away_team_key")
+  eventFinalResult  String?  @map("event_final_result")
+  eventStatus       String   @map("event_status")
+  
+  countryName   String   @map("country_name")
+  leagueName    String   @map("league_name")
+  leagueKey     String   @map("league_key")
+  leagueRound   String?  @map("league_round")
+  leagueSeason  String   @map("league_season")
+  eventLive     String   @default("0") @map("event_live")
+  
+  recordType    String
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@map("head_to_head")
+  @@unique([eventKey, firstTeamKey, secondTeamKey, recordType])
+  @@index([firstTeamKey])
+  @@index([secondTeamKey])
+  @@index([eventKey])
+  @@index([recordType])
+}

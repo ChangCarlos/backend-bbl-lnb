@@ -1,0 +1,21 @@
+model Lineup {
+  id        String   @id @default(uuid())
+  
+  fixtureId String
+  fixture   Fixture  @relation("HomeLineup", fields: [fixtureId], references: [id], onDelete: Cascade)
+  
+  awayFixtureId String?
+  awayFixture   Fixture? @relation("AwayLineup", fields: [awayFixtureId], references: [id], onDelete: Cascade)
+  
+  playerId  String
+  player    Player   @relation(fields: [playerId], references: [playerId], onDelete: Cascade)
+  
+  teamType  String
+  type      String
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  @@map("lineups")
+  @@index([fixtureId])
+  @@index([playerId])
+}

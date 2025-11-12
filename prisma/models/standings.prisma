@@ -1,0 +1,35 @@
+model Standing {
+  id        String   @id @default(uuid())
+  
+  standingPlace         String  @map("standing_place")
+  standingPlaceType     String? @map("standing_place_type")
+  standingTeam          String  @map("standing_team")
+  
+  standingP    String  @map("standing_p")
+  standingW    String  @map("standing_w")
+  standingWO   String  @map("standing_wo")
+  standingL    String  @map("standing_l")
+  standingLO   String  @map("standing_lo")
+  standingF    String  @map("standing_f")
+  standingA    String  @map("standing_a")
+  standingPCT  String? @map("standing_pct")
+  
+  teamKey      String  @map("team_key")
+  team         Team    @relation(fields: [teamKey], references: [teamKey], onDelete: Cascade)
+  
+  leagueKey    String  @map("league_key")
+  league       League  @relation(fields: [leagueKey], references: [leagueKey], onDelete: Cascade)
+  
+  leagueSeason String  @map("league_season")
+  leagueRound  String? @map("league_round")
+  
+  standingUpdated String?  @map("standing_updated")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  @@map("standings")
+  @@unique([teamKey, leagueKey, leagueSeason, leagueRound])
+  @@index([teamKey])
+  @@index([leagueKey])
+  @@index([leagueSeason])
+}

@@ -1,0 +1,37 @@
+model PlayerStatistic {
+  id        String   @id @default(uuid())
+  
+  fixtureId String
+  fixture   Fixture  @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  
+  playerId  String
+  player    Player   @relation(fields: [playerId], references: [playerId], onDelete: Cascade)
+  
+  teamType  String
+  
+  assists               String? @map("player_assists")
+  blocks                String? @map("player_blocks")
+  defenseRebounds       String? @map("player_defense_rebounds")
+  fieldGoalsAttempts    String? @map("player_field_goals_attempts")
+  fieldGoalsMade        String? @map("player_field_goals_made")
+  freethrowsAttempts    String? @map("player_freethrows_goals_attempts")
+  freethrowsMade        String? @map("player_freethrows_goals_made")
+  minutes               String? @map("player_minutes")
+  offenceRebounds       String? @map("player_offence_rebounds")
+  onCourt               String? @map("player_oncourt")
+  personalFouls         String? @map("player_personal_fouls")
+  plusMinus             String? @map("player_plus_minus")
+  position              String? @map("player_position")
+  points                String? @map("player_points")
+  steals                String? @map("player_steals")
+  threepointAttempts    String? @map("player_threepoint_goals_attempts")
+  threepointMade        String? @map("player_threepoint_goals_made")
+  totalRebounds         String? @map("player_total_rebounds")
+  turnovers             String? @map("player_turnovers")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  @@map("player_statistics")
+  @@index([fixtureId])
+  @@index([playerId])
+}

@@ -1,0 +1,19 @@
+model Player {
+  id        String   @id @default(uuid())
+  
+  playerId  String   @unique @map("player_id")
+  name      String   @map("player_name")
+  
+  teamKey   String?  @map("team_key")
+  team      Team?    @relation(fields: [teamKey], references: [teamKey], onDelete: SetNull)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  lineups     Lineup[]
+  statistics  PlayerStatistic[]
+  
+  @@map("players")
+  @@index([playerId])
+  @@index([teamKey])
+}

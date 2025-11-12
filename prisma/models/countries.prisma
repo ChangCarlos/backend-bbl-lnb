@@ -1,0 +1,14 @@
+model Country {
+  id        String   @id @default(uuid())
+  
+  countryKey  String   @unique @map("country_key")
+  name        String   @map("country_name")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  leagues League[]
+  
+  @@map("countries")
+  @@index([countryKey])
+}

@@ -1,0 +1,42 @@
+model Fixture {
+  id        String   @id @default(uuid())
+  
+  eventKey        String   @unique @map("event_key")
+  eventDate       String   @map("event_date")
+  eventTime       String   @map("event_time")
+  eventStatus     String   @map("event_status")
+  eventQuarter    String?  @map("event_quarter")
+  eventLive       String   @default("0") @map("event_live")
+  finalResult     String?  @map("event_final_result")
+  
+  homeTeamKey     String   @map("home_team_key")
+  homeTeam        Team     @relation("HomeTeam", fields: [homeTeamKey], references: [teamKey], onDelete: Cascade)
+  
+  awayTeamKey     String   @map("away_team_key")
+  awayTeam        Team     @relation("AwayTeam", fields: [awayTeamKey], references: [teamKey], onDelete: Cascade)
+  
+  leagueKey       String   @map("league_key")
+  league          League   @relation(fields: [leagueKey], references: [leagueKey], onDelete: Cascade)
+  leagueRound     String?  @map("league_round")
+  leagueSeason    String?  @map("league_season")
+  
+  homeTeamLogo    String?  @map("home_team_logo")
+  awayTeamLogo    String?  @map("away_team_logo")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  scores           Score[]
+  statistics       FixtureStatistic[]
+  homeLineup       Lineup[]           @relation("HomeLineup")
+  awayLineup       Lineup[]           @relation("AwayLineup")
+  playerStatistics PlayerStatistic[]
+  
+  @@map("fixtures")
+  @@index([eventKey])
+  @@index([homeTeamKey])
+  @@index([awayTeamKey])
+  @@index([leagueKey])
+  @@index([eventDate])
+  @@index([eventStatus])
+}

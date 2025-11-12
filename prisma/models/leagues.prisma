@@ -1,0 +1,20 @@
+model League {
+  id        String   @id @default(uuid())
+  
+  leagueKey String   @unique @map("league_key")
+  name      String   @map("league_name")
+  
+  countryKey String  @map("country_key")
+  country    Country @relation(fields: [countryKey], references: [countryKey], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  teams      Team[]
+  fixtures   Fixture[]
+  standings  Standing[]
+  
+  @@map("leagues")
+  @@index([countryKey])
+  @@index([leagueKey])
+}
