@@ -6,6 +6,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import basketballApiConfig from './config/basketball-api.config';
+import { BasketballModule } from './modules/basketball/basketball.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import basketballApiConfig from './config/basketball-api.config';
     PrismaModule,
     AuthModule,
     UsersModule,
+    BasketballModule,
   ],
   controllers: [],
   providers: [
