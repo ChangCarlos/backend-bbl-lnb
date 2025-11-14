@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   HttpCode,
@@ -31,7 +32,9 @@ export class TeamsController {
   @HttpCode(HttpStatus.OK)
   async syncTeams(@Param('leagueKey') leagueKey: string) {
     if (!leagueKey) {
-      throw new Error('League ID is required for synchronization.');
+      throw new BadRequestException(
+        'League ID is required for synchronization.',
+      );
     }
     return this.teamsService.syncTeams(leagueKey);
   }
