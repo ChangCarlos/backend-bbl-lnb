@@ -10,8 +10,8 @@ export interface ApiStanding {
   standing_F: string;
   standing_A: string;
   standing_PCT: string;
-  team_key: string;
-  league_key: string;
+  team_key: string | number;
+  league_key: string | number;
   league_season: string;
   league_round: string;
   standing_updated: string;
