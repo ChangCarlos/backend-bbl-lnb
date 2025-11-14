@@ -18,7 +18,7 @@ export interface ApiStatistic {
 
 export interface ApiLineupPlayer {
   player: string;
-  player_id: string;
+  player_id: string | number;
 }
 
 export interface ApiTeamLineup {
@@ -33,7 +33,7 @@ export interface ApiLineups {
 
 export interface ApiPlayerStatistic {
   player: string;
-  player_id: string;
+  player_id: string | number;
   player_assists: string;
   player_blocks: string;
   player_defense_rebounds: string;
@@ -61,19 +61,19 @@ export interface ApiPlayerStatistics {
 }
 
 export interface ApiFixture {
-  event_key: string;
+  event_key: string | number;
   event_date: string;
   event_time: string;
   event_home_team: string;
-  home_team_key: string;
+  home_team_key: string | number;
   event_away_team: string;
-  away_team_key: string;
+  away_team_key: string | number;
   event_final_result: string;
   event_quarter: string | null;
   event_status: string;
   country_name: string;
   league_name: string;
-  league_key: string;
+  league_key: string | number;
   league_round: string | null;
   league_season: string;
   event_live: string;
