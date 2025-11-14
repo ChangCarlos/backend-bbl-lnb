@@ -9,10 +9,11 @@ import { StandingsService } from './services/standings.service';
 import { H2hService } from './services/h2h.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { CountriesController } from './controllers/countries.controller';
+import { LeaguesController } from './controllers/leagues.controller';
 
 @Module({
   imports: [HttpModule, PrismaModule],
-  controllers: [CountriesController],
+  controllers: [CountriesController, LeaguesController],
   providers: [
     BasketballApiService,
     CountriesService,
