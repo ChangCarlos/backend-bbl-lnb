@@ -1,4 +1,4 @@
-# 🚀 Guia de Início Rápido
+# Guia de Início Rápido
 
 ## Instalação em 5 Minutos
 

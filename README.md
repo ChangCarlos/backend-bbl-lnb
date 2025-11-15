@@ -1,8 +1,8 @@
-# 🏀 Basketball API
+# Basketball API
 
 API REST completa para gerenciamento de dados de basquete, integrada com a [AllSports Basketball API](https://allsportsapi.com). Desenvolvida com NestJS, PostgreSQL e Prisma ORM.
 
-## 📋 Índice
+## Índice
 
 - [Características](#-características)
 - [Tecnologias](#-tecnologias)
@@ -18,19 +18,19 @@ API REST completa para gerenciamento de dados de basquete, integrada com a [AllS
 
 ## Características
 
-- ✅ **Autenticação JWT** com refresh tokens
-- ✅ **Controle de Acesso** baseado em roles (USER/ADMIN)
-- ✅ **Cache em Memória** para otimização de performance
-- ✅ **Paginação** em todos os endpoints de listagem
-- ✅ **Cron Jobs** para sincronização automática de dados
-- ✅ **Documentação OpenAPI/Swagger** interativa
-- ✅ **Validação** de dados com class-validator
-- ✅ **TypeScript** com tipagem forte
-- ✅ **Docker** para PostgreSQL
+- **Autenticação JWT** com refresh tokens
+- **Controle de Acesso** baseado em roles (USER/ADMIN)
+- **Cache em Memória** para otimização de performance
+- **Paginação** em todos os endpoints de listagem
+- **Cron Jobs** para sincronização automática de dados
+- **Documentação OpenAPI/Swagger** interativa
+- **Validação** de dados com class-validator
+- **TypeScript** com tipagem forte
+- **Docker** para PostgreSQL
 
 ---
 
-## 🛠 Tecnologias
+## Tecnologias
 
 - **Node.js** v20+
 - **NestJS** v11
@@ -130,7 +130,7 @@ A aplicação utiliza a **AllSports Basketball API** para obter dados de jogos, 
 - **Basic**: 2.000 requisições/hora
 - **Pro**: 10.000+ requisições/hora
 
-> 💡 **Dica**: O plano gratuito é suficiente para desenvolvimento e testes iniciais.
+> **Dica**: O plano gratuito é suficiente para desenvolvimento e testes iniciais.
 
 ---
 
@@ -175,7 +175,7 @@ A API estará rodando em: **http://localhost:3000**
 
 ---
 
-## 📚 Documentação da API
+## Documentação da API
 
 A documentação interativa Swagger está disponível em:
 
@@ -475,4 +475,3 @@ Se encontrar algum problema:
 
 ---
 
-**Feito com ❤️ e ☕**
