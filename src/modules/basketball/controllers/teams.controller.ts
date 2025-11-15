@@ -7,17 +7,21 @@ import {
   Param,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { TeamsService } from '../services/teams.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { UserRole } from 'src/common/enums/user-role.enum';
 
 @Controller('teams')
+@UseInterceptors(CacheInterceptor)
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
 
-  @Public()
   @Get()
+  @CacheTTL(12 * 60 * 60 * 1000)
   async findAll(@Query() paginationDto?: PaginationDto) {
     return this.teamsService.findAll(paginationDto);
   }
@@ -32,7 +36,7 @@ export class TeamsController {
     return this.teamsService.findByKey(key);
   }
 
-  @Public()
+  @Roles(UserRole.ADMIN)
   @Post('sync/:leagueKey')
   @HttpCode(HttpStatus.OK)
   async syncTeams(@Param('leagueKey') leagueKey: string) {

@@ -8,18 +8,22 @@ import {
   Param,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { FixturesService } from '../services/fixtures.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { FixturesQueryDto } from '../dto/fixturesQuery.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { UserRole } from 'src/common/enums/user-role.enum';
 
 @Controller('fixtures')
+@UseInterceptors(CacheInterceptor)
 export class FixturesController {
   constructor(private readonly fixturesService: FixturesService) {}
 
-  @Public()
   @Get()
+  @CacheTTL(5 * 60 * 1000)
   async findAll(
     @Query('leagueKey') leagueKey?: string,
     @Query('teamKey') teamKey?: string,
@@ -34,13 +38,13 @@ export class FixturesController {
     return this.fixturesService.findAll(filters, pagination);
   }
 
-  @Public()
   @Get(':key')
+  @CacheTTL(5 * 60 * 1000)
   async findByKey(@Param('key') key: string) {
     return this.fixturesService.findByKey(key);
   }
 
-  @Public()
+  @Roles(UserRole.ADMIN)
   @Post('sync')
   @HttpCode(HttpStatus.OK)
   async syncFixtures(@Body() query: FixturesQueryDto) {
