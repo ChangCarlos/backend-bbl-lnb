@@ -13,6 +13,7 @@ import { LeaguesController } from './controllers/leagues.controller';
 import { TeamsController } from './controllers/teams.controller';
 import { StandingsController } from './controllers/standings.controller';
 import { H2hController } from './controllers/h2h.controller';
+import { FixturesController } from './controllers/fixtures.controller';
 
 @Module({
   imports: [HttpModule, PrismaModule],
@@ -22,6 +23,7 @@ import { H2hController } from './controllers/h2h.controller';
     TeamsController,
     StandingsController,
     H2hController,
+    FixturesController,
   ],
   providers: [
     BasketballApiService,

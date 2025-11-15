@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { BasketballApiService } from './basketball-api.service';
+import { PaginatedResult } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class LeaguesService {
@@ -45,13 +46,35 @@ export class LeaguesService {
     };
   }
 
-  async findAll() {
-    return this.prisma.league.findMany({
-      include: {
-        country: true,
+  async findAll(pagination?: {
+    page?: number;
+    limit?: number;
+  }): Promise<PaginatedResult<any>> {
+    const page = pagination?.page || 1;
+    const limit = pagination?.limit || 10;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.prisma.league.findMany({
+        include: {
+          country: true,
+        },
+        orderBy: { name: 'asc' },
+        skip,
+        take: limit,
+      }),
+      this.prisma.league.count(),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
       },
-      orderBy: { name: 'asc' },
-    });
+    };
   }
 
   async findByKey(leagueKey: string) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { BasketballApiService } from './basketball-api.service';
+import { PaginatedResult } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class TeamsService {
@@ -41,10 +42,32 @@ export class TeamsService {
     };
   }
 
-  async findAll() {
-    return this.prisma.team.findMany({
-      orderBy: { name: 'asc' },
-    });
+  async findAll(pagination?: {
+    page?: number;
+    limit?: number;
+  }): Promise<PaginatedResult<any>> {
+    const page = pagination?.page || 1;
+    const limit = pagination?.limit || 10;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.prisma.team.findMany({
+        orderBy: { name: 'asc' },
+        skip,
+        take: limit,
+      }),
+      this.prisma.team.count(),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findByKey(teamKey: string) {

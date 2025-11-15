@@ -6,9 +6,11 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
 import { TeamsService } from '../services/teams.service';
 import { Public } from 'src/common/decorators/public.decorator';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('teams')
 export class TeamsController {
@@ -16,8 +18,8 @@ export class TeamsController {
 
   @Public()
   @Get()
-  async findAll() {
-    return this.teamsService.findAll();
+  async findAll(@Query() paginationDto?: PaginationDto) {
+    return this.teamsService.findAll(paginationDto);
   }
 
   @Get('league/:leagueKey')
@@ -30,6 +32,7 @@ export class TeamsController {
     return this.teamsService.findByKey(key);
   }
 
+  @Public()
   @Post('sync/:leagueKey')
   @HttpCode(HttpStatus.OK)
   async syncTeams(@Param('leagueKey') leagueKey: string) {
