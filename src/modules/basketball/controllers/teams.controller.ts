@@ -8,11 +8,13 @@ import {
   Post,
 } from '@nestjs/common';
 import { TeamsService } from '../services/teams.service';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
 
+  @Public()
   @Get()
   async findAll() {
     return this.teamsService.findAll();
