@@ -11,10 +11,16 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { CountriesController } from './controllers/countries.controller';
 import { LeaguesController } from './controllers/leagues.controller';
 import { TeamsController } from './controllers/teams.controller';
+import { StandingsController } from './controllers/standings.controller';
 
 @Module({
   imports: [HttpModule, PrismaModule],
-  controllers: [CountriesController, LeaguesController, TeamsController],
+  controllers: [
+    CountriesController,
+    LeaguesController,
+    TeamsController,
+    StandingsController,
+  ],
   providers: [
     BasketballApiService,
     CountriesService,
