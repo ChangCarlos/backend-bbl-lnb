@@ -6,17 +6,21 @@ import {
   Param,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { LeaguesService } from '../services/leagues.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { UserRole } from 'src/common/enums/user-role.enum';
 
 @Controller('leagues')
+@UseInterceptors(CacheInterceptor)
 export class LeaguesController {
   constructor(private readonly leaguesService: LeaguesService) {}
 
-  @Public()
   @Get()
+  @CacheTTL(24 * 60 * 60 * 1000)
   async findAll(@Query() paginationDto?: PaginationDto) {
     return this.leaguesService.findAll(paginationDto);
   }
@@ -31,7 +35,7 @@ export class LeaguesController {
     return this.leaguesService.findByKey(key);
   }
 
-  @Public()
+  @Roles(UserRole.ADMIN)
   @Post('sync')
   @HttpCode(HttpStatus.OK)
   async syncLeagues(@Query('countryId') countryId?: string) {

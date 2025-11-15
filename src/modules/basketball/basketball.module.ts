@@ -7,6 +7,7 @@ import { TeamsService } from './services/teams.service';
 import { FixturesService } from './services/fixtures.service';
 import { StandingsService } from './services/standings.service';
 import { H2hService } from './services/h2h.service';
+import { BasketballCronService } from './services/basketball-cron.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { CountriesController } from './controllers/countries.controller';
 import { LeaguesController } from './controllers/leagues.controller';
@@ -33,6 +34,7 @@ import { FixturesController } from './controllers/fixtures.controller';
     FixturesService,
     StandingsService,
     H2hService,
+    BasketballCronService,
   ],
   exports: [
     BasketballApiService,

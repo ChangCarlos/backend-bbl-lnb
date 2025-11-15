@@ -103,4 +103,15 @@ export class LeaguesService {
       orderBy: { name: 'asc' },
     });
   }
+
+  async getAllActiveLeagues() {
+    return this.prisma.league.findMany({
+      select: {
+        leagueKey: true,
+        name: true,
+        countryKey: true,
+      },
+      orderBy: { name: 'asc' },
+    });
+  }
 }
