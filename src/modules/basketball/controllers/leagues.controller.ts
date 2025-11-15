@@ -8,14 +8,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { LeaguesService } from '../services/leagues.service';
+import { Public } from 'src/common/decorators/public.decorator';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('leagues')
 export class LeaguesController {
   constructor(private readonly leaguesService: LeaguesService) {}
 
+  @Public()
   @Get()
-  async findAll() {
-    return this.leaguesService.findAll();
+  async findAll(@Query() paginationDto?: PaginationDto) {
+    return this.leaguesService.findAll(paginationDto);
   }
 
   @Get('country/:countryKey')
@@ -28,6 +31,7 @@ export class LeaguesController {
     return this.leaguesService.findByKey(key);
   }
 
+  @Public()
   @Post('sync')
   @HttpCode(HttpStatus.OK)
   async syncLeagues(@Query('countryId') countryId?: string) {
