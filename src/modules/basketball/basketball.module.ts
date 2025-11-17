@@ -7,6 +7,7 @@ import { TeamsService } from './services/teams.service';
 import { FixturesService } from './services/fixtures.service';
 import { StandingsService } from './services/standings.service';
 import { H2hService } from './services/h2h.service';
+import { PlayersService } from './services/players.service';
 import { BasketballCronService } from './services/basketball-cron.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { CountriesController } from './controllers/countries.controller';
@@ -15,6 +16,7 @@ import { TeamsController } from './controllers/teams.controller';
 import { StandingsController } from './controllers/standings.controller';
 import { H2hController } from './controllers/h2h.controller';
 import { FixturesController } from './controllers/fixtures.controller';
+import { PlayersController } from './controllers/players.controller';
 
 @Module({
   imports: [HttpModule, PrismaModule],
@@ -25,6 +27,7 @@ import { FixturesController } from './controllers/fixtures.controller';
     StandingsController,
     H2hController,
     FixturesController,
+    PlayersController,
   ],
   providers: [
     BasketballApiService,
@@ -34,6 +37,7 @@ import { FixturesController } from './controllers/fixtures.controller';
     FixturesService,
     StandingsService,
     H2hService,
+    PlayersService,
     BasketballCronService,
   ],
   exports: [
@@ -44,6 +48,7 @@ import { FixturesController } from './controllers/fixtures.controller';
     FixturesService,
     StandingsService,
     H2hService,
+    PlayersService,
   ],
 })
 export class BasketballModule {}
