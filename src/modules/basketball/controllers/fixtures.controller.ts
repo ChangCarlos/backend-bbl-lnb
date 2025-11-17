@@ -22,7 +22,7 @@ import {
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { FixturesService } from '../services/fixtures.service';
 import { FixturesQueryDto } from '../dto/fixturesQuery.dto';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { FixtureFiltersDto } from '../dto/fixture-filters.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { UserRole } from 'src/common/enums/user-role.enum';
 
@@ -36,36 +36,6 @@ export class FixturesController {
   @CacheTTL(5 * 60 * 1000)
   @ApiOperation({
     summary: 'Listar fixtures com filtros opcionais e paginação',
-  })
-  @ApiQuery({
-    name: 'leagueKey',
-    required: false,
-    description: 'Filtrar fixtures por liga',
-    example: '766',
-  })
-  @ApiQuery({
-    name: 'teamKey',
-    required: false,
-    description: 'Filtrar fixtures por time (home ou away)',
-    example: '1234',
-  })
-  @ApiQuery({
-    name: 'date',
-    required: false,
-    description: 'Filtrar fixtures por data específica (formato: YYYY-MM-DD)',
-    example: '2025-01-20',
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    description: 'Número da página (padrão: 1)',
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: 'Itens por página (padrão: 10, máximo: 100)',
-    example: 10,
   })
   @ApiResponse({
     status: 200,
@@ -105,18 +75,12 @@ export class FixturesController {
       },
     },
   })
-  async findAll(
-    @Query('leagueKey') leagueKey?: string,
-    @Query('teamKey') teamKey?: string,
-    @Query('date') date?: string,
-    @Query() paginationDto?: PaginationDto,
-  ) {
-    const filters = { leagueKey, teamKey, date };
-    const pagination = {
-      page: paginationDto?.page,
-      limit: paginationDto?.limit,
-    };
-    return this.fixturesService.findAll(filters, pagination);
+  async findAll(@Query() filters: FixtureFiltersDto) {
+    const { leagueKey, teamKey, date, page, limit } = filters;
+    return this.fixturesService.findAll(
+      { leagueKey, teamKey, date },
+      { page, limit },
+    );
   }
 
   @Get(':key')

@@ -179,10 +179,12 @@ export class FixturesService {
         where: { playerId: String(apiPlayer.player_id) },
         update: {
           name: apiPlayer.player,
+          teamKey: teamKey,
         },
         create: {
           playerId: String(apiPlayer.player_id),
           name: apiPlayer.player,
+          teamKey: teamKey,
         },
       });
 
