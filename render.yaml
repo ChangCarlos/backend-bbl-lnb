@@ -4,8 +4,8 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: pnpm install && pnpm prisma generate && pnpm build
-    startCommand: pnpm prisma migrate deploy && pnpm start:prod
+    buildCommand: pnpm install && pnpm prisma:generate:prod && pnpm build
+    startCommand: pnpm prisma:migrate:deploy && pnpm start:prod
     envVars:
       - key: NODE_ENV
         value: production
