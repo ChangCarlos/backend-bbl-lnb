@@ -3,6 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 import { BasketballApiService } from './services/basketball-api.service';
 import { CountriesService } from './services/countries.service';
 import { LeaguesService } from './services/leagues.service';
+import { LeagueStatsService } from './services/league-stats.service';
 import { TeamsService } from './services/teams.service';
 import { FixturesService } from './services/fixtures.service';
 import { StandingsService } from './services/standings.service';
@@ -33,6 +34,7 @@ import { PlayersController } from './controllers/players.controller';
     BasketballApiService,
     CountriesService,
     LeaguesService,
+    LeagueStatsService,
     TeamsService,
     FixturesService,
     StandingsService,
