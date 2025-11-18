@@ -85,6 +85,13 @@ export class BasketballApiService {
     return response.result;
   }
 
+  async getLeagueByKey(leagueId: string): Promise<ApiLeague | null> {
+    const url = this.buildUrl('Leagues', { leagueId });
+    const response = await this.request<ApiLeague>(url);
+    // A API retorna um objeto único quando busca por leagueId
+    return response.result || null;
+  }
+
   async getTeams(leagueId: string): Promise<ApiTeam[]> {
     const url = this.buildUrl('Teams', { leagueId });
     const response = await this.request<ApiTeam[]>(url);
