@@ -129,22 +129,14 @@ export class AuthController {
   ): Promise<LoginResponse> {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
-    response.cookie('access_token', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 15 * 60 * 1000,
-    });
+    const accessCookie = `access_token=${accessToken}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=${15 * 60}`;
+    const refreshCookie = `refresh_token=${refreshToken}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=${7 * 24 * 60 * 60}`;
 
-    response.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    response.setHeader('Set-Cookie', [accessCookie, refreshCookie]);
 
     return { user };
   }
+
 
   @Public()
   @Post('refresh')
