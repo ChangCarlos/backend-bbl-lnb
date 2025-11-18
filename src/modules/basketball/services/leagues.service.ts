@@ -11,9 +11,22 @@ export class LeaguesService {
   ) {}
 
   async syncLeagues(
-    countryId?: string,
+    countryIdOrLeagueKey?: string,
   ): Promise<{ synced: number; message: string }> {
-    const leagues = await this.basketballApi.getLeagues(countryId);
+    let leagues: any[] = [];
+
+    // Se parece com um leagueKey (números), busca liga específica
+    if (countryIdOrLeagueKey && /^\d+$/.test(countryIdOrLeagueKey)) {
+      const league = await this.basketballApi.getLeagueByKey(
+        countryIdOrLeagueKey,
+      );
+      if (league) {
+        leagues = [league];
+      }
+    } else {
+      // Caso contrário, busca por país
+      leagues = await this.basketballApi.getLeagues(countryIdOrLeagueKey);
+    }
 
     let syncCount = 0;
 

@@ -68,7 +68,12 @@ export class AuthService {
   }
 
   generateTokens(user: UserResponse): TokenPair {
-    const payload: JwtPayload = { email: user.email, sub: user.id };
+    const payload: JwtPayload = { 
+      email: user.email, 
+      sub: user.id,
+      name: user.name,
+      role: user.role
+    };
 
     const secret = this.configService.get<string>('jwt.jwtSecret');
     const expiresIn =
@@ -111,7 +116,12 @@ export class AuthService {
       throw new UnauthorizedException('Usuário não encontrado');
     }
 
-    const payload: JwtPayload = { email: user.email, sub: user.id };
+    const payload: JwtPayload = { 
+      email: user.email, 
+      sub: user.id,
+      name: user.name,
+      role: user.role
+    };
 
     const secret = this.configService.get<string>('jwt.jwtSecret');
     const expiresIn =
