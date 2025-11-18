@@ -116,6 +116,9 @@ export class PlayersService {
           },
           orderBy: { points: 'desc' },
         },
+        scores: {
+          orderBy: { quarter: 'asc' },
+        },
         homeTeam: true,
         awayTeam: true,
       },
@@ -125,8 +128,38 @@ export class PlayersService {
       return null;
     }
 
-    const homeStats = fixture.playerStatistics
+    const uniqueStats = fixture.playerStatistics.reduce((acc, stat) => {
+      const key = `${stat.playerId}-${stat.teamType}`;
+      const existing = acc.get(key);
+
+      if (!existing || (stat.points || 0) > (existing.points || 0)) {
+        acc.set(key, stat);
+      }
+      return acc;
+    }, new Map());
+
+    const uniqueStatsArray = Array.from(uniqueStats.values());
+
+    const uniqueScores = fixture.scores.reduce((acc, score) => {
+      acc.set(score.quarter, score);
+      return acc;
+    }, new Map());
+
+    const uniqueScoresArray = Array.from(uniqueScores.values()).sort((a, b) => {
+      const parseQuarter = (q: string) => {
+        if (q.includes('1st')) return 1;
+        if (q.includes('2nd')) return 2;
+        if (q.includes('3rd')) return 3;
+        if (q.includes('4th')) return 4;
+        if (q.includes('OT')) return 5;
+        return 0;
+      };
+      return parseQuarter(a.quarter) - parseQuarter(b.quarter);
+    });
+
+    const homeStats = uniqueStatsArray
       .filter((stat) => stat.teamType === 'home')
+      .sort((a, b) => (b.points || 0) - (a.points || 0))
       .map((stat) => ({
         playerId: stat.playerId,
         playerName: stat.player.name,
@@ -147,8 +180,9 @@ export class PlayersService {
         position: stat.position,
       }));
 
-    const awayStats = fixture.playerStatistics
+    const awayStats = uniqueStatsArray
       .filter((stat) => stat.teamType === 'away')
+      .sort((a, b) => (b.points || 0) - (a.points || 0))
       .map((stat) => ({
         playerId: stat.playerId,
         playerName: stat.player.name,
@@ -178,6 +212,11 @@ export class PlayersService {
         eventStatus: fixture.eventStatus,
         finalResult: fixture.finalResult,
       },
+      scores: uniqueScoresArray.map((score) => ({
+        quarter: score.quarter,
+        scoreHome: score.scoreHome,
+        scoreAway: score.scoreAway,
+      })),
       homeTeam: {
         teamKey: fixture.homeTeamKey,
         teamName: fixture.homeTeam.name,

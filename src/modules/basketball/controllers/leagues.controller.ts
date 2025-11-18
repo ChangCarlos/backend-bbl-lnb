@@ -18,6 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { LeaguesService } from '../services/leagues.service';
+import { LeagueStatsService } from '../services/league-stats.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { UserRole } from 'src/common/enums/user-role.enum';
@@ -26,7 +27,10 @@ import { UserRole } from 'src/common/enums/user-role.enum';
 @Controller('leagues')
 @UseInterceptors(CacheInterceptor)
 export class LeaguesController {
-  constructor(private readonly leaguesService: LeaguesService) {}
+  constructor(
+    private readonly leaguesService: LeaguesService,
+    private readonly leagueStatsService: LeagueStatsService,
+  ) {}
 
   @Get()
   @CacheTTL(24 * 60 * 60 * 1000)
@@ -154,6 +158,29 @@ export class LeaguesController {
   })
   async findByKey(@Param('key') key: string) {
     return this.leaguesService.findByKey(key);
+  }
+
+  @Get(':key/stats')
+  @CacheTTL(30 * 60 * 1000)
+  @ApiOperation({ summary: 'Buscar estatísticas da liga' })
+  @ApiParam({
+    name: 'key',
+    description: 'Identificador único da liga',
+    example: '757',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Estatísticas retornadas com sucesso',
+    schema: {
+      example: {
+        totalTeams: 18,
+        totalGames: 306,
+        currentSeason: '2024-2025',
+      },
+    },
+  })
+  async getLeagueStats(@Param('key') key: string) {
+    return this.leagueStatsService.getLeagueStats(key);
   }
 
   @Roles(UserRole.ADMIN)
