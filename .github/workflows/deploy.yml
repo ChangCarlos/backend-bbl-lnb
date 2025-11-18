@@ -47,6 +47,8 @@ jobs:
         run: pnpm install
 
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/basketball_db_test
         run: pnpm prisma generate
 
       - name: Run migrations

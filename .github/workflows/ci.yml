@@ -35,6 +35,8 @@ jobs:
         run: pnpm install
       
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/dummy
         run: pnpm prisma generate
       
       - name: Run linter
@@ -62,6 +64,8 @@ jobs:
         run: pnpm install
       
       - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/dummy
         run: pnpm prisma generate
       
       - name: Build
