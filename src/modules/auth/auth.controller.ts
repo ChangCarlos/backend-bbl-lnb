@@ -129,23 +129,22 @@ export class AuthController {
   ): Promise<LoginResponse> {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
-    response.cookie('access_token', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 15 * 60 * 1000,
-      domain: 'https://frontend-bbl-lnb.vercel.app',
-      path: '/',
-    });
-
-    response.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      domain: 'https://frontend-bbl-lnb.vercel.app',
-      path: '/',
-    });
+  response.cookie('access_token', accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    maxAge: 15 * 60 * 1000,
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+  });
+  response.cookie('refresh_token', refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+  });
 
     return { user };
   }
