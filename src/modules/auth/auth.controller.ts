@@ -176,7 +176,7 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
       maxAge: 15 * 60 * 1000,
-      domain: 'https://frontend-bbl-lnb.vercel.app',
+      domain: 'frontend-bbl-lnb.vercel.app',
       path: '/',
     });
 
