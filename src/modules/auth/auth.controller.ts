@@ -134,7 +134,7 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
       maxAge: 15 * 60 * 1000,
-      domain: 'frontend-bbl-lnb.vercel.app',
+      domain: 'https://frontend-bbl-lnb.vercel.app',
       path: '/',
     });
 
@@ -143,7 +143,7 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      domain: 'frontend-bbl-lnb.vercel.app',
+      domain: 'https://frontend-bbl-lnb.vercel.app',
       path: '/',
     });
 
@@ -177,7 +177,7 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
       maxAge: 15 * 60 * 1000,
-      domain: 'frontend-bbl-lnb.vercel.app',
+      domain: 'https://frontend-bbl-lnb.vercel.app',
       path: '/',
     });
 
