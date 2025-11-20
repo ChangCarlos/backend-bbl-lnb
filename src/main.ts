@@ -14,7 +14,7 @@ async function bootstrap() {
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Set-Cookie'],
+    exposedHeaders: ['set-cookie'],
   });
 
   app.useGlobalPipes(

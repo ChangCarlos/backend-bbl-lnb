@@ -129,21 +129,21 @@ export class AuthController {
   ): Promise<LoginResponse> {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
-    const cookieOptions = {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none' as const,
-    domain: 'frontend-bbl-lnb.vercel.app',
-    path: '/',
-    };
-
     response.cookie('access_token', accessToken, {
-      ...cookieOptions,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: 'frontend-bbl-lnb.vercel.app',
+      path: '/',
       maxAge: 15 * 60 * 1000,
     });
 
     response.cookie('refresh_token', refreshToken, {
-      ...cookieOptions,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: 'frontend-bbl-lnb.vercel.app',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -172,17 +172,12 @@ export class AuthController {
   ): Promise<RefreshResponse> {
     const accessToken = await this.authService.generateAccessToken(user.id);
 
-    
-    const cookieOptions = {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none' as const,
-    domain: 'frontend-bbl-lnb.vercel.app',
-    path: '/',
-    };
-
     response.cookie('access_token', accessToken, {
-      ...cookieOptions,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      domain: 'frontend-bbl-lnb.vercel.app',
+      path: '/',
       maxAge: 15 * 60 * 1000,
     });
 
@@ -208,16 +203,8 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<LogoutResponse> {
 
-    const cookieOptions = {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none' as const,
-    domain: 'frontend-bbl-lnb.vercel.app',
-    path: '/',
-    };
-    
-    response.clearCookie('access_token', cookieOptions);
-    response.clearCookie('refresh_token', cookieOptions);
+    response.clearCookie('access_token');
+    response.clearCookie('refresh_token');
 
     return { message: 'Logout realizado com sucesso' };
   }
