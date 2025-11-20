@@ -135,6 +135,7 @@ export class AuthController {
     sameSite: 'none',
     maxAge: 15 * 60 * 1000,
     path: '/',
+    domain: process.env.COOKIE_DOMAIN, 
   });
   response.cookie('refresh_token', refreshToken, {
     httpOnly: true,
@@ -142,6 +143,7 @@ export class AuthController {
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/',
+    domain: process.env.COOKIE_DOMAIN, 
   });
 
     return { user };
@@ -175,6 +177,7 @@ export class AuthController {
       sameSite: 'none',
       maxAge: 15 * 60 * 1000,
       path: '/',
+      domain: process.env.COOKIE_DOMAIN, 
     });
 
     return { message: 'Token atualizado com sucesso' };
