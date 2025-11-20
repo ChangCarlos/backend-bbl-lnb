@@ -130,19 +130,21 @@ export class AuthController {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
   response.cookie('access_token', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 15 * 60 * 1000,
-      path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+    maxAge: 15 * 60 * 1000,
   });
 
   response.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
     return { user };
@@ -170,13 +172,14 @@ export class AuthController {
   ): Promise<RefreshResponse> {
     const accessToken = await this.authService.generateAccessToken(user.id);
 
-    response.cookie('access_token', accessToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 15 * 60 * 1000,
-        path: '/',
-    });
+  response.cookie('access_token', accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+    maxAge: 15 * 60 * 1000,
+  });
 
     return { message: 'Token atualizado com sucesso' };
   }
