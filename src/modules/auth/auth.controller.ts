@@ -129,23 +129,23 @@ export class AuthController {
   ): Promise<LoginResponse> {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
-  response.cookie('access_token', accessToken, {
+    const cookieOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: 'none',
+    sameSite: 'none' as const,
     domain: 'frontend-bbl-lnb.vercel.app',
     path: '/',
-    maxAge: 15 * 60 * 1000,
-  });
+    };
 
-  response.cookie('refresh_token', refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    domain: 'frontend-bbl-lnb.vercel.app',
-    path: '/',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+    response.cookie('access_token', accessToken, {
+      ...cookieOptions,
+      maxAge: 15 * 60 * 1000,
+    });
+
+    response.cookie('refresh_token', refreshToken, {
+      ...cookieOptions,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     return { user };
   }
@@ -172,14 +172,19 @@ export class AuthController {
   ): Promise<RefreshResponse> {
     const accessToken = await this.authService.generateAccessToken(user.id);
 
-  response.cookie('access_token', accessToken, {
+    
+    const cookieOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: 'none',
+    sameSite: 'none' as const,
     domain: 'frontend-bbl-lnb.vercel.app',
     path: '/',
-    maxAge: 15 * 60 * 1000,
-  });
+    };
+
+    response.cookie('access_token', accessToken, {
+      ...cookieOptions,
+      maxAge: 15 * 60 * 1000,
+    });
 
     return { message: 'Token atualizado com sucesso' };
   }
@@ -202,8 +207,17 @@ export class AuthController {
   async logout(
     @Res({ passthrough: true }) response: Response,
   ): Promise<LogoutResponse> {
-    response.clearCookie('access_token');
-    response.clearCookie('refresh_token');
+
+    const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none' as const,
+    domain: 'frontend-bbl-lnb.vercel.app',
+    path: '/',
+    };
+    
+    response.clearCookie('access_token', cookieOptions);
+    response.clearCookie('refresh_token', cookieOptions);
 
     return { message: 'Logout realizado com sucesso' };
   }
