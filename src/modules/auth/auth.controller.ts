@@ -135,7 +135,7 @@ export class AuthController {
     sameSite: 'none',
     maxAge: 15 * 60 * 1000,
     path: '/',
-    domain: process.env.COOKIE_DOMAIN, 
+    domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
   });
   response.cookie('refresh_token', refreshToken, {
     httpOnly: true,
@@ -143,7 +143,7 @@ export class AuthController {
     sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/',
-    domain: process.env.COOKIE_DOMAIN, 
+    domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
   });
 
     return { user };
@@ -177,7 +177,7 @@ export class AuthController {
       sameSite: 'none',
       maxAge: 15 * 60 * 1000,
       path: '/',
-      domain: process.env.COOKIE_DOMAIN, 
+      domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
     });
 
     return { message: 'Token atualizado com sucesso' };
