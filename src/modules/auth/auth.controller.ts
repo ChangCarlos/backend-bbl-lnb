@@ -184,6 +184,7 @@ export class AuthController {
     return { message: 'Token atualizado com sucesso' };
   }
 
+  @Public()
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth('access-token')
