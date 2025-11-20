@@ -130,20 +130,19 @@ export class AuthController {
     const { accessToken, refreshToken } = this.authService.generateTokens(user);
 
   response.cookie('access_token', accessToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    maxAge: 15 * 60 * 1000,
-    path: '/',
-    domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 15 * 60 * 1000,
+      path: '/',
   });
+
   response.cookie('refresh_token', refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    path: '/',
-    domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: '/',
   });
 
     return { user };
@@ -172,12 +171,11 @@ export class AuthController {
     const accessToken = await this.authService.generateAccessToken(user.id);
 
     response.cookie('access_token', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 15 * 60 * 1000,
-      path: '/',
-      domain: process.env.COOKIE_DOMAIN || 'backend-bbl-lnb-1.onrender.com', 
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: 15 * 60 * 1000,
+        path: '/',
     });
 
     return { message: 'Token atualizado com sucesso' };
